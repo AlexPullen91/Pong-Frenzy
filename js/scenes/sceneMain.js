@@ -36,6 +36,7 @@ class SceneMain extends Phaser.Scene {
         //
         this.paddle1 = this.physics.add.sprite(this.centerX, this.quarter, 'paddles');
         Align.scaleToGameW(this.paddle1, .25)
+        this.pScale = this.paddle1.scaleX;
         //
         //
         //
@@ -65,10 +66,25 @@ class SceneMain extends Phaser.Scene {
 
     changePaddle(pointer) { // only change the color of the paddle that the ball is heading towards
         var paddle = (this.velocity > 0) ? this.paddle2 : this.paddle1;
+        this.tweens.add({
+            targets: paddle,
+            duration: 500,
+            scaleX: 0,
+            onComplete:
+            this.onCompleteHandler,
+            onCompleteParams: [{scope: this, paddle: paddle}]
+        });
+        
+
+        this.downY = pointer.y;
+    }
+    // flip animation for paddles when they change color
+    onCompleteHandler (tween, targets, custom) { 
+        var paddle = custom.paddle;
+        paddle.scaleX = custom.scope.pScale;
         var color = (paddle.frame.name == 1) ? 0 : 1;
         paddle.setFrame(color);
 
-        this.downY = pointer.y;
     }
 
     setBallColor() { // chance for ball to change from white or black
