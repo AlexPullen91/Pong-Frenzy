@@ -38,6 +38,15 @@ class SceneMain extends Phaser.Scene {
         //
         this.paddle2 = this.physics.add.sprite(this.centerX, this.quarter * 3, 'paddles');
         Align.scaleToGameW(this.paddle2, .25)
+        //
+        //
+        //
+        this.ball.setVelocity(0, 100);
+        this.paddle1.setImmovable();
+        this.paddle2.setImmovable();
+        this.physics.add.collider(this.ball, this.paddle1);
+        this.physics.add.collider(this.ball, this.paddle2);
+
 
     }
     
