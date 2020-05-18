@@ -3,9 +3,7 @@ class SceneMain extends Phaser.Scene {
         super('SceneMain');
     }
     preload() {
-        this.load.spritesheet('balls', 'images/balls.png', { frameWidth: 100, frameHeight: 100 });
-        this.load.spritesheet('paddles', 'images/paddles.png', { frameWidth: 400, frameHeight: 50 });
-        this.load.image('bar', 'images/bar.jpg');
+        
         
     }
     create() {
@@ -76,9 +74,8 @@ class SceneMain extends Phaser.Scene {
             this.onCompleteHandler,
             onCompleteParams: [{scope: this, paddle: paddle}]
         });
-        
-
         this.downY = pointer.y;
+        emitter.emit(G.PLAY_SOUND, "flip");
     }
     // flip animation for paddles when they change color
     onCompleteHandler (tween, targets, custom) { 
@@ -103,6 +100,7 @@ class SceneMain extends Phaser.Scene {
     ballHit(ball, paddle) {
         this.velocity = -this.velocity;
         this.velocity *= 1.01;
+        emitter.emit(G.PLAY_SOUND, "hit");
         var distY = Math.abs(this.paddle1.y - this.paddle2.y); // distance between paddles
         if (ball.frame.name == paddle.frame.name) { // detects if ball is hitting correct paddles
            
@@ -117,6 +115,7 @@ class SceneMain extends Phaser.Scene {
             emitter.emit(G.UP_POINTS, points);
 
         } else {
+            emitter.emit(G.PLAY_SOUND, "lose");
             this.time.addEvent({ delay: 1000, 
                 callback: this.doOver, // game over
                 callbackScope: this,

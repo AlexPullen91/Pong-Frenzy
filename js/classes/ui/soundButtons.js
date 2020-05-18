@@ -21,6 +21,7 @@ class SoundButtons extends Phaser.GameObjects.Container {
         this.sfxButton.setScrollFactor(0);
         this.musicButton.setScrollFactor(0);
 
+        this.musicButton.visible = false;
         // this detects if the music of sound is already off in the model
         if (model.musicOn == false) {
             this.musicButton.toggle();

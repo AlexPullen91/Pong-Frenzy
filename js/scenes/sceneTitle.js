@@ -12,7 +12,6 @@ class SceneTitle extends Phaser.Scene {
         this.alignGrid = new AlignGrid({rows: 11, cols: 11, scene: this}); // adds grid to the scene
         //this.alignGrid.showNumbers();
 
-        this.backImage = this.add.image(game.config.width / 2, game.config.height / 2, "titleBack");
 
         var title = this.add.image(0, 0, 'title'); // inserts title image
         Align.scaleToGameW(title, .8); // scales down the title
@@ -24,7 +23,7 @@ class SceneTitle extends Phaser.Scene {
         emitter.on('start_game', this.startGame, this); // listen for start game event
         var mediaManager = new MediaManager({scene: this});
         //mediaManager.setBackgroundMusic("backgroundMusic");
-        this.scene.start('SceneMain');
+        
     }
     startGame() {
         this.scene.start('SceneMain');

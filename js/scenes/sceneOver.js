@@ -7,7 +7,6 @@ class SceneOver extends Phaser.Scene {
     	this.load.image("title", "images/title.png")
     }
     create() {
-        this.backImage = this.add.image(game.config.width / 2, game.config.height / 2, "titleBack");
         this.alignGrid = new AlignGrid({rows:11, cols:11, scene:this}); // adds grid to the scene
         //this.alignGrid.showNumbers();
 
