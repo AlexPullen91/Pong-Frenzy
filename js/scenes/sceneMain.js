@@ -6,6 +6,7 @@ class SceneMain extends Phaser.Scene {
         this.load.spritesheet('balls', 'images/balls.png', { frameWidth: 100, frameHeight: 100 });
         this.load.spritesheet('paddles', 'images/paddles.png', { frameWidth: 400, frameHeight: 50 });
         this.load.image('bar', 'images/bar.jpg');
+        
     }
     create() {
         emitter = new Phaser.Events.EventEmitter();
@@ -19,6 +20,7 @@ class SceneMain extends Phaser.Scene {
         this.centerX = game.config.width / 2;
         this.centerY = game.config.height / 2;
         this.quarter = game.config.height / 4;
+        this.pMove = game.config.height / 32; // amount the paddle is going to move every time
         //
         //
         //
@@ -72,6 +74,14 @@ class SceneMain extends Phaser.Scene {
         this.velocity = -this.velocity;
         this.setBallColor();
         ball.setVelocity(0, this.velocity);
+        var targetY = 0;
+
+        if (paddle.y > this.centerY) {
+            targetY = paddle.y - this.pMove;
+        } else {
+            targetY = paddle.y + this.pMove;
+        }
+        this.tweens.add({targets: paddle, duration: 1000, y:targetY})
     }
 
     update() {
