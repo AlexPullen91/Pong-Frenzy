@@ -23,10 +23,11 @@ class SceneTitle extends Phaser.Scene {
 
         emitter.on('start_game', this.startGame, this); // listen for start game event
         var mediaManager = new MediaManager({scene: this});
-        mediaManager.setBackgroundMusic("backgroundMusic");
+        //mediaManager.setBackgroundMusic("backgroundMusic");
+        this.scene.start('SceneMain');
     }
     startGame() {
-        //this.scene.start('SceneMain');
+        this.scene.start('SceneMain');
     }
     update() {
 

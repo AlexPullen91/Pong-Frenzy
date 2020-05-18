@@ -9,11 +9,18 @@ class SceneMain extends Phaser.Scene {
     create() {
         emitter = new Phaser.Events.EventEmitter();
         controller = new Controller();
-        var mediaManager = new mediaManager({scene: this});
+        var mediaManager = new MediaManager({scene: this});
 
         var sb = new SoundButtons({scene: this});
+        
+        // reference to dead center of the game
+        this.centerX = game.config.width / 2;
+        this.centerY = game.config.height / 2;
 
-        this.alignGrid = new AlignGrid({scene: this, rows: 5, cols: 5});
+        this.ball = this.physics.add.sprite(this.centerX, this.centerY, 'balls');
+        Align.scaleToGameW(this.ball, .05);
+
+        //this.alignGrid = new AlignGrid({scene: this, rows: 5, cols: 5});
         //this.alignGrid.showNumbers(); // defines alignGrid class instance
         
         
