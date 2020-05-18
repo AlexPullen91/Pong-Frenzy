@@ -15,7 +15,7 @@ class SceneMain extends Phaser.Scene {
         var sb = new SoundButtons({scene: this});
         
         // reference to dead center of the game
-        this.velocity = 200;
+        this.velocity = 100;
         this.centerX = game.config.width / 2;
         this.centerY = game.config.height / 2;
         this.quarter = game.config.height / 4;

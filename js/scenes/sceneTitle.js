@@ -22,8 +22,14 @@ class SceneTitle extends Phaser.Scene {
 
         emitter.on('start_game', this.startGame, this); // listen for start game event
         var mediaManager = new MediaManager({scene: this});
-        //mediaManager.setBackgroundMusic("backgroundMusic");
         
+        this.centerX = game.config.width / 2;
+        this.centerY = game.config.height / 2;
+        this.ball = this.physics.add.sprite(this.centerX, this.centerY, 'balls');
+        this.ball.body.setBounce(0, 1);
+        this.ball.body.setVelocity(0, 100);
+        this.ball.body.collideWorldBounds = true;
+        Align.scaleToGameW(this.ball, .05);
     }
     startGame() {
         this.scene.start('SceneMain');
