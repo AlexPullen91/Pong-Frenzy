@@ -11,6 +11,7 @@ class SceneMain extends Phaser.Scene {
     create() {
         emitter = new Phaser.Events.EventEmitter();
         controller = new Controller();
+        model.score = 0;
         var mediaManager = new MediaManager({scene: this});
 
         var sb = new SoundButtons({scene: this});
@@ -103,6 +104,17 @@ class SceneMain extends Phaser.Scene {
         this.velocity = -this.velocity;
         if (ball.frame.name == paddle.frame.name) { // detects if ball is hitting correct paddles
             console.log('points!');
+            var points = 1; // 1 point if ball hits paddle
+            var distY = Math.abs(this.paddle1.y - this.paddle2.y); // distance between paddles
+
+            if (distY < game.config.height / 3) {
+                points = 2;
+            }
+            if (distY < game.config.height / 4) {
+                points = 3;
+            }
+            emitter.emit(G.UP_POINTS, points);
+
         } else {
             this.time.addEvent({ delay: 1000, 
                 callback: this.doOver, // game over
