@@ -48,9 +48,17 @@ class SceneMain extends Phaser.Scene {
         this.paddle2.setImmovable();
         this.physics.add.collider(this.ball, this.paddle1, this.ballHit, null, this);
         this.physics.add.collider(this.ball, this.paddle2, this.ballHit, null, this);
+        this.input.on('pointerdown', this.changePaddle, this);
 
 
     }
+
+    changePaddle() { // only change the color of the paddle that the ball is heading towards
+        var paddle = (this.velocity > 0) ? this.paddle2 : this.paddle1;
+        var color = (paddle.frame.name == 1) ? 0 : 1;
+        paddle.setFrame(color);
+    }
+
     setBallColor() { // chance for ball to change from white or black
         var r = Math.floor(Math.random() * 100);
         if (r < 50) {
@@ -59,11 +67,13 @@ class SceneMain extends Phaser.Scene {
             this.ball.setFrame(1);
         }
     }
+
     ballHit(ball, paddle) {
         this.velocity = -this.velocity;
         this.setBallColor();
         ball.setVelocity(0, this.velocity);
     }
+
     update() {
 
     }
