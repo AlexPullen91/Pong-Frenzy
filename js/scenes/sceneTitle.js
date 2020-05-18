@@ -26,7 +26,7 @@ class SceneTitle extends Phaser.Scene {
         mediaManager.setBackgroundMusic("backgroundMusic");
     }
     startGame() {
-        this.scene.start('SceneMain');
+        //this.scene.start('SceneMain');
     }
     update() {
 
