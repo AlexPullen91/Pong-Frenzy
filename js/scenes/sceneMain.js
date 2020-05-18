@@ -16,12 +16,11 @@ class SceneMain extends Phaser.Scene {
         var sb = new SoundButtons({scene: this});
         
         // reference to dead center of the game
-        this.velocity = 400;
+        this.velocity = 200;
         this.centerX = game.config.width / 2;
         this.centerY = game.config.height / 2;
         this.quarter = game.config.height / 4;
         this.pMove = game.config.height / 32; // amount the paddle is going to move every time
-        //
         //
         //
         this.bar = this.add.image(this.centerX, this.centerY, 'bar');
@@ -33,16 +32,18 @@ class SceneMain extends Phaser.Scene {
         Align.scaleToGameW(this.ball, .05);
         //
         //
-        //
         this.paddle1 = this.physics.add.sprite(this.centerX, this.quarter, 'paddles');
         Align.scaleToGameW(this.paddle1, .25)
         this.pScale = this.paddle1.scaleX;
         //
         //
-        //
         this.paddle2 = this.physics.add.sprite(this.centerX, this.quarter * 3, 'paddles');
         Align.scaleToGameW(this.paddle2, .25)
         //
+        //
+        var scoreBox = new ScoreBox({scene: this});
+        this.aGrid = new AlignGrid({scene: this, rows: 11, cols: 11});
+        this.aGrid.placeAtIndex(5, scoreBox);
         //
         //
         this.setBallColor();
@@ -95,9 +96,22 @@ class SceneMain extends Phaser.Scene {
             this.ball.setFrame(1);
         }
     }
-
+    doOver() {
+        this.scene.start('SceneOver'); // game over screen
+    }
     ballHit(ball, paddle) {
         this.velocity = -this.velocity;
+        if (ball.frame.name == paddle.frame.name) { // detects if ball is hitting correct paddles
+            console.log('points!');
+        } else {
+            this.time.addEvent({ delay: 1000, 
+                callback: this.doOver, // game over
+                callbackScope: this,
+                loop: false
+            });
+            return;
+        }
+
         this.setBallColor();
         ball.setVelocity(0, this.velocity);
         var targetY = 0;
