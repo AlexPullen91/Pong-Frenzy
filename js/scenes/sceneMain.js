@@ -15,7 +15,7 @@ class SceneMain extends Phaser.Scene {
         var sb = new SoundButtons({scene: this});
         
         // reference to dead center of the game
-        this.velocity = 100;
+        this.velocity = 400;
         this.centerX = game.config.width / 2;
         this.centerY = game.config.height / 2;
         this.quarter = game.config.height / 4;
@@ -42,6 +42,7 @@ class SceneMain extends Phaser.Scene {
         //
         //
         //
+        this.setBallColor();
         this.ball.setVelocity(0, this.velocity);
         this.paddle1.setImmovable();
         this.paddle2.setImmovable();
@@ -50,8 +51,17 @@ class SceneMain extends Phaser.Scene {
 
 
     }
+    setBallColor() { // chance for ball to change from white or black
+        var r = Math.floor(Math.random() * 100);
+        if (r < 50) {
+            this.ball.setFrame(0);
+        } else {
+            this.ball.setFrame(1);
+        }
+    }
     ballHit(ball, paddle) {
         this.velocity = -this.velocity;
+        this.setBallColor();
         ball.setVelocity(0, this.velocity);
     }
     update() {
