@@ -102,11 +102,12 @@ class SceneMain extends Phaser.Scene {
     }
     ballHit(ball, paddle) {
         this.velocity = -this.velocity;
+        this.velocity *= 1.01;
+        var distY = Math.abs(this.paddle1.y - this.paddle2.y); // distance between paddles
         if (ball.frame.name == paddle.frame.name) { // detects if ball is hitting correct paddles
-            console.log('points!');
+           
             var points = 1; // 1 point if ball hits paddle
-            var distY = Math.abs(this.paddle1.y - this.paddle2.y); // distance between paddles
-
+            
             if (distY < game.config.height / 3) {
                 points = 2;
             }
@@ -124,16 +125,20 @@ class SceneMain extends Phaser.Scene {
             return;
         }
 
-        this.setBallColor();
-        ball.setVelocity(0, this.velocity);
-        var targetY = 0;
-
-        if (paddle.y > this.centerY) { // move paddles inwards
-            targetY = paddle.y - this.pMove;
-        } else {
-            targetY = paddle.y + this.pMove;
-        }
-        this.tweens.add({targets: paddle, duration: 1000, y:targetY})
+            this.setBallColor();
+            ball.setVelocity(0, this.velocity);
+            var targetY = 0;
+            if (distY > game.config.height / 5) { // stops paddles coming together
+                if (paddle.y > this.centerY) { // move paddles inwards
+                    targetY = paddle.y - this.pMove;
+                } else {
+                    targetY = paddle.y + this.pMove;
+                }
+                this.tweens.add({targets: paddle,
+                    duration: 1000,
+                    y:targetY
+                });
+            }
     }
 
     update() {
