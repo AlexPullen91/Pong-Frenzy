@@ -25,6 +25,7 @@ window.onload = function() {
                     debug: true
                 }
             },
+            backgroundColor: '#0DB34B',
             scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
         };
     } else {
@@ -39,6 +40,7 @@ window.onload = function() {
                     debug: true
                 }
             },
+            backgroundColor: '#0DB34B',
             scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
         };
 
